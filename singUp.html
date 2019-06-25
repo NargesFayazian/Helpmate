@@ -21,7 +21,7 @@
 
 <body>
     <div class="singUp">
-        <form>
+        <form action=>
             <div class="form-group">
                 <label >Name</label>
                 <input id="customerName" type="text">
@@ -46,8 +46,7 @@
             </div>
         </form>
     </div>
-
-
+    <!--script write on database-->
 <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
 <script>
@@ -65,8 +64,8 @@
     firebase.initializeApp(firebaseConfig);
     var database = firebase.database();
     console.log(database);
-    
     $("#submitInformation").on( "click",function (event) {
+        event.preventDefault();
         var Name= $("#customerName").val();
         var Phone = $("#customerPhone").val();
         var city = $("#customerCity").val();
@@ -76,10 +75,8 @@
         database.ref().push({
             Name: Name,
             phone: Phone,
-         Location:city+"-"+state
+        Location:city+"-"+state
         });
-
-        event.preventDefault();
     });
 </script>
 </body>

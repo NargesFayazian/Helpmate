@@ -14,44 +14,57 @@
 </head>
 
 <body>
-        <table class="table" id='order'>
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Phone Number</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Store</th>
-                        <th scope="col">Order</th>
-                        <th scope="col">Sumit</th>
-                    </tr>
-                </thead>
-                <tbody class="child-order">
-                    <tr>
-                    </tr>
-                </tbody>
-            </table>
+    <table class="table" id='order'>
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Location</th>
+                <th scope="col">Store</th>
+                <th scope="col">Order</th>
+                <th scope="col">Sumit</th>
+            </tr>
+        </thead>
+        <tbody class="child-order">
+            <tr>
+            </tr>
+        </tbody>
+    </table>
 
-</body>
-<script>
- $("#submitInformation").on("click", function (event) {
-
-    Name = $("#customerName").val();
-    Phone= $("#customerPhone").val();
-    city= $("#customerCity ").val();
-    state=$("#inputState").val();
-    location=city+state;
-
-    var newRow = $("<tr>").append(
-    $("<td>").text(Name),
-    $("<td>").text(Phone),
-    $("<td>").text(Location)
-    
-  );
-
-  // Append the new row to the table
-  $("#order > tbody").append(newRow);
+    <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCOsuw4NkwUemCfTYWAXKg4-nUkOMzvJMc",
+            authDomain: "helpmate-a3841.firebaseapp.com",
+            databaseURL: "https://helpmate-a3841.firebaseio.com",
+            projectId: "helpmate-a3841",
+            storageBucket: "",
+            messagingSenderId: "572251725016",
+            appId: "1:572251725016:web:4716b6e11ec59bc4"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        var database = firebase.database();
+        console.log(database);
+// -------------------read and write information------------------
+            database.ref().on("child_added", function (snapshot) {
+                // storing the snapshot.val() in a variable for convenience
+                var sv = snapshot.val();
+                var Name = snapshot.val().Name;
+                var Phone = snapshot.val().phone;
+                var Location = snapshot.val().Location;
+                var newRow = $("<tr>").append(
+                    $("<td>").text(Name),
+                    $("<td>").text(Phone),
+                    $("<td>").text(Location),
+                );
+                // Append the new row to the table
+                $("#order> tbody").append(newRow);
+            }, function (errorObject) {
+                console.log("Errors handled: " + errorObject.code);
             });
-
-
-</script>
+    </script>
+</body>
 </html>
