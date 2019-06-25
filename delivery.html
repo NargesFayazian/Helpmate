@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <style type="text/css">
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+</head>
+
+<body>
+        <table class="table" id='order'>
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Store</th>
+                        <th scope="col">Order</th>
+                        <th scope="col">Sumit</th>
+                    </tr>
+                </thead>
+                <tbody class="child-order">
+                    <tr>
+                    </tr>
+                </tbody>
+            </table>
+
+</body>
+<script>
+ $("#submitInformation").on("click", function (event) {
+
+    Name = $("#customerName").val();
+    Phone= $("#customerPhone").val();
+    city= $("#customerCity ").val();
+    state=$("#inputState").val();
+    location=city+state;
+
+    var newRow = $("<tr>").append(
+    $("<td>").text(Name),
+    $("<td>").text(Phone),
+    $("<td>").text(Location)
+    
+  );
+
+  // Append the new row to the table
+  $("#order > tbody").append(newRow);
+            });
+
+
+</script>
+</html>
