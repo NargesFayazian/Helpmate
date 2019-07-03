@@ -77,6 +77,7 @@
             font-family: Roboto;
             font-size: 13px;
             font-weight: 300;
+            overflow: scroll;
         }
 
         #pac-input {
@@ -148,65 +149,83 @@
         <span id="place-address"></span>
     </div>
 
-    <script>
-        var place;
+    
+       
+        <script>
+             var place;
         var locate;
         var store;
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 38.881622, lng: -77.090981 },
+            // This example requires the Places library. Include the libraries=places
+            // parameter when you first load the API. For example:
+            // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+      
+            function initMap() {
+              var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 38.8462236, lng: -77.3063733},
                 zoom: 13
-            });
-            var card = document.getElementById('pac-card');
-            var input = document.getElementById('pac-input');
-            var types = document.getElementById('type-selector');
-            var strictBounds = document.getElementById('strict-bounds-selector');
-
-            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
-
-            var autocomplete = new google.maps.places.Autocomplete(input);
-
-            // Bind the map's bounds (viewport) property to the autocomplete object,
-            // so that the autocomplete requests use the current map bounds for the
-            // bounds option in the request.
-            autocomplete.bindTo('bounds', map);
-
-            var infowindow = new google.maps.InfoWindow();
-            var infowindowContent = document.getElementById('infowindow-content');
-            infowindow.setContent(infowindowContent);
-            var marker = new google.maps.Marker({
+              });
+              var card = document.getElementById('pac-card');
+              var input = document.getElementById('pac-input');
+              var types = document.getElementById('type-selector');
+              var strictBounds = document.getElementById('strict-bounds-selector');
+      
+              map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+      
+              var autocomplete = new google.maps.places.Autocomplete(input);
+      
+              // Bind the map's bounds (viewport) property to the autocomplete object,
+              // so that the autocomplete requests use the current map bounds for the
+              // bounds option in the request.
+              autocomplete.bindTo('bounds', map);
+      
+              // Set the data fields to return when the user selects a place.
+              
+      
+              var infowindow = new google.maps.InfoWindow();
+              var infowindowContent = document.getElementById('infowindow-content');
+              infowindow.setContent(infowindowContent);
+              var marker = new google.maps.Marker({
                 map: map,
                 anchorPoint: new google.maps.Point(0, -29)
-            });
-
-            autocomplete.addListener('place_changed', function () {
+              });
+      
+              autocomplete.addListener('place_changed', function() {
                 infowindow.close();
                 marker.setVisible(false);
                 place = autocomplete.getPlace();
-                locate = place.formatted_address;
-                $("#locate").attr("placeholder", locate);
-                //$("#locate").attr("disabled", "disabled");
-                console.log(locate);
-                store = place.name;
-                $("#store").attr("placeholder", store);
-                //$("#store").attr("disabled", "disabled");
-                console.log(store);
+                      locate = place.formatted_address;
+                      $("#locate").attr("placeholder", locate);
+                      //$("#locate").attr("disabled", "disabled");
+                      console.log(locate);
+                      store = place.name;
+                      $("#store").attr("placeholder", store);
+                      //$("#store").attr("disabled", "disabled");
+                      console.log(store);
+                
+                marker.setPosition(place.geometry.location);
+                marker.setVisible(true);
+      
                 var address = '';
                 if (place.address_components) {
-                    address = [
-                        (place.address_components[0] && place.address_components[0].short_name || ''),
-                        (place.address_components[1] && place.address_components[1].short_name || ''),
-                        (place.address_components[2] && place.address_components[2].short_name || '')
-                    ].join(' ');
+                  address = [
+                    (place.address_components[0] && place.address_components[0].short_name || ''),
+                    (place.address_components[1] && place.address_components[1].short_name || ''),
+                    (place.address_components[2] && place.address_components[2].short_name || '')
+                  ].join(' ');
                 }
-
+      
                 infowindowContent.children['place-icon'].src = place.icon;
                 infowindowContent.children['place-name'].textContent = place.name;
                 infowindowContent.children['place-address'].textContent = address;
                 infowindow.open(map, marker);
-            });
-        }
-    </script>
+              });
+      
+              // Sets a listener on a radio button to change the filter type on Places
+              // Autocomplete.
+              
+            }
+          </script>
+   
     <!-- **** Map **** -->
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu7WV1wCioJ7IRtL6Sr6by792KyBIvk-0&libraries=places&callback=initMap"
@@ -401,8 +420,7 @@
 
 <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
-<!-- jQuery 2.2.4 -->
-<script src="js/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     // Your web app's Firebase configuration
     var firebaseConfig = {
@@ -442,7 +460,6 @@
         user = database.ref().push({
             Name: Name,
             phone: phone,
-
         });
     });
     database.ref().on("child_added", function (snapshot) {
@@ -460,15 +477,19 @@
             $("<td>").text(Locate),
             $("<td>").text(store),
             $("<td>").text(order),
-            $("<td><button type='button' class='btn btn-success'style='background-color: #92c800;'value='Submit'>" + "submit" + "</button>"),
+            $("<td><button type='button' class='btn btn-success' id='accept' style='background-color: #92c800' ;'value='Submit'>" + "submit" + "</button>"),
         );
+
+        $("#accept").on("click",function (event) {
+            console.log($(this));
+            console.log("hi")
+        });
         // Append the new row to the table
         $("#order> tbody").append(newRow);
     }, function (errorObject) {
         console.log("Errors handled: " + errorObject.code);
     });
+    
 </script>
-
 </body>
-
 </html>
