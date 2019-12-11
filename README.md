@@ -8,7 +8,7 @@ Each helpmate will get a standard fee and an optional tip.
 
 <hr>
 <h4>Link to portfolio:</h4>
-<span><h5>Repository:</h5><a herf="https://nargesfayazian.github.io/helpmate/">https://nargesfayazian.github.io/helpmate/</a></span>
+<span><h5>Repository:</h5><a href="https://nargesfayazian.github.io/helpmate/">https://nargesfayazian.github.io/helpmate/</a></span>
 <hr>
 <h4>How to work:</h4>
  An app that allows users to send a request to buy small things, another user can accept the order, buy and deliver. for example, you can order for coffee at Starbucks .one person that works at the same your building or your friends can accept your order and buy and deliver it for you. 
